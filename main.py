@@ -8,17 +8,19 @@ def main():
     # Initialise delta time and clock for a smooth 60 fps
     dt = 0
     clock = pygame.time.Clock()
-
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updateable, drawable)
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-
     # Game Loop
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
-        player.update(dt)
-        player.draw(screen)
+        updateable.update(dt)
+        for thing in drawable:
+            thing.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000 # Keep game at 60 FPS
 
